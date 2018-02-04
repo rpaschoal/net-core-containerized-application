@@ -6,3 +6,4 @@ services:
     build:
       context: ./Application.API
       dockerfile: Dockerfile
+       
