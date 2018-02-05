@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Infrastructure.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,7 +25,7 @@ namespace Application.API
         public void ConfigureServices(IServiceCollection services)
         {
             // Register other layers dependencies
-            Infrastructure.Data.LayerConfiguration.ConfigureServices(services, Configuration.GetConnectionString("ContainerizedNetCoreApp"));
+            services.ConfigureDataServices(Configuration.GetConnectionString("ContainerizedNetCoreApp"));
 
             services.AddMvc();
         }
@@ -36,6 +37,8 @@ namespace Application.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.InitDatabaseContext();
 
             app.UseMvc();
         }
