@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Entities;
+using Infrastructure.Data.EFCore;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Application.API.Controllers
@@ -9,11 +11,18 @@ namespace Application.API.Controllers
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+        private ApplicationDbContext _context { get; set; }
+
+        public ValuesController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<User> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _context.Users.ToList();
         }
 
         // GET api/values/5
